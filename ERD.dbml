@@ -1,0 +1,63 @@
+Table Bike {
+    Id int [pk]
+    Brand string
+    Color string
+    OwnerId int
+    Owner Owner
+    BikeTypeId int
+    WorkOrders "List<WorkOrder>"
+}
+Table BikeType {
+    Id int [pk]
+    Name string
+}
+Table WorkOrder {
+    Id int [pk]
+    Description string
+    DateInitiated DateTime
+    DateCompleted "DateTime?"
+    UserProfileId int
+    UserProfile UserProfile
+    BikeId int
+    Bike Bike
+}
+Table Owner {
+    Id int [pk]
+    Name string
+    Address string
+    Email string
+    Telephone string
+}
+Table UserProfile {
+    Id int [pk]
+    FirstName string
+    LastName string
+    Address string
+    IdentityUserId string
+    IdentityUser IdentityUser
+    WorkOrders "List<WorkOrder>"
+}
+Table IdentityUser {
+    Id int [pk]
+    Username string
+    Email string
+    PasswordHash "???"
+}
+Table IdentityUserRole {
+    Id int [pk]
+    RoleId string
+    UserId string
+}
+Table IdentityRole {
+    Id string [pk]
+    Name string
+    NormalizedName string
+}
+
+ref: Bike.OwnerId > Owner.Id
+ref: Bike.BikeTypeId > BikeType.Id
+ref: WorkOrder.BikeId > Bike.Id
+ref: WorkOrder.UserProfileId > UserProfile.Id
+ref: UserProfile.IdentityUserId > IdentityUser.Id
+ref: IdentityUserRole.RoleId > IdentityRole.Id
+ref: IdentityUserRole.UserId > IdentityUser.Id
